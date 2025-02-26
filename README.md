@@ -4,6 +4,12 @@ An intelligent **voice-controlled assistant** built using **FastAPI**, **JavaScr
 
 ---
 
+## 🎥 Demo Video  
+
+Watch the AI Voice Assistant in action! Click the link below to see the demo:  
+
+[![Watch the Demo](https://img.shields.io/badge/▶%20Watch%20Demo-blue?style=for-the-badge)](https://drive.google.com/file/d/1VO3oB-xlbUoMArAsB-jTZHY_eJ76Fovj/view?usp=sharing)
+
 ## 🌟 Features  
 ✅ **Trigger with "Alexa" Command** – Starts listening when you say "Alexa"  
 ✅ **Voice Recognition** – Converts speech to text using **Google SpeechRecognition**  
