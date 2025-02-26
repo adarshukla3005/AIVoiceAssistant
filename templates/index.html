@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+
+        .loader div {
+            width: 25px;
+            height: 70px;
+            background-color: white;
+            border-radius: 25px;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scaleY(1); opacity: 0.5; }
+            50% { transform: scaleY(1.8); opacity: 1; }
+        }
+
+        .loader div:nth-child(1) { animation-delay: 0s; }
+        .loader div:nth-child(2) { animation-delay: 0.2s; }
+        .loader div:nth-child(3) { animation-delay: 0.4s; }
+        .loader div:nth-child(4) { animation-delay: 0.6s; }
+        .loader div:nth-child(5) { animation-delay: 0.8s; }
+
+        #response {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: white;
+            color: black;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: gray;
+        }
+
+        #output {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loader">
+        <div></div> <div></div> <div></div> <div></div> <div></div>
+    </div>
+
+    <p id="response">Waiting for 'Alexa' command...</p>
+    <button onclick="startVoiceCommand()">Start Voice Command</button>
+    <button onclick="stopAssistant()">Stop Assistant</button>
+    
+    <div id="output"></div>
+    <script>
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US';
+        recognition.continuous = false;
+        recognition.interimResults = false;
+
+        let isProcessingCommand = false;
+        let isListening = false; // Fix: Initialize the isListening variable
+
+        async function startVoiceCommand() {
+            // stopAssistant(); 
+            if (isListening) return; // Prevent multiple requests
+            isListening = true;  // Fix: Set isListening to true
+            document.getElementById("response").innerText = "Listening...";
+            await fetch("http://127.0.0.1:8000/start-assistant", { method: "GET" });
+        }
+
+        async function stopAssistant() {
+            recognition.stop(); // Fix: Stop the recognition
+            isListening = false; // Fix: Reset isListening
+            document.getElementById("response").innerText = "Assistant stopped listening.";
+            await fetch("http://127.0.0.1:8000/stop-speak", { method: "POST" });
+        }
+
+        recognition.onresult = async function(event) {
+            if (isProcessingCommand) return;
+
+            const transcript = event.results[0][0].transcript.toLowerCase();
+            console.log("Heard:", transcript);
+
+            document.getElementById("response").innerText = "Processing command...";
+            isProcessingCommand = true;
+            isListening = false; // Fix: Reset isListening when a command is heard
+            await sendTextCommand(transcript);  // Send the recognized text to FastAPI
+        };
+
+        recognition.onend = function() {
+            isListening = false; // Fix: Reset isListening when recognition stops
+            if (!isProcessingCommand) {
+                document.getElementById("response").innerText = "Click 'Start Voice Command' to activate.";
+            }
+        };
+
+        async function sendTextCommand(command) {
+            document.getElementById("response").innerText = "Processing...";
+            try {
+                let response = await fetch("http://127.0.0.1:8000/text-command", {  
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ command: command })
+                });
+
+                let data = await response.json();
+                document.getElementById("response").innerText = "Assistant: " + data.response;
+                document.getElementById("output").innerHTML += `<p><strong>You:</strong> ${command}</p>`; 
+                document.getElementById("output").innerHTML += `<p><strong>Assistant:</strong> ${data.response}</p>`; 
+
+            } catch (error) {
+                document.getElementById("response").innerText = "Error processing command.";
+            } finally {
+                isProcessingCommand = false;
+            }
+        }
+    </script>
+</body>
+</html>
