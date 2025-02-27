@@ -1,26 +1,26 @@
-# 🎙️ AI Voice Assistant 🤖  
+# AI Voice Assistant
 
 An intelligent **voice-controlled assistant** built using **FastAPI**, **JavaScript**, and **SpeechRecognition**, capable of responding to voice commands and speaking out responses.
 
 ---
 
-## 🎥 Demo Video  
+## Demo Video  
 
 Watch the AI Voice Assistant in action! Click below to see the demo:  
 
 [![Watch the Demo](https://img.shields.io/badge/🎬%20Watch%20Demo-red?style=for-the-badge&logo=youtube&logoColor=white)](https://drive.google.com/file/d/1VO3oB-xlbUoMArAsB-jTZHY_eJ76Fovj/view?usp=sharing)
 
-## 🌟 Features  
-✅ **Trigger with "Alexa" Command** – Starts listening when you say "Alexa"  
-✅ **Voice Recognition** – Converts speech to text using **Google SpeechRecognition**  
-✅ **Text Command Processing** – Understands basic commands like time, greetings, and weather  
-✅ **Speech Response** – Speaks the assistant's response using **pyttsx3**  
-✅ **Interactive UI** – Includes a simple, responsive **frontend with animations**  
-✅ **Start/Stop Listening** – Control assistant via UI buttons  
+## Features  
+**Trigger with "Alexa" Command** – Starts listening when you say "Alexa"  
+**Voice Recognition** – Converts speech to text using **Google SpeechRecognition**  
+**Text Command Processing** – Understands basic commands like time, greetings, and weather  
+**Speech Response** – Speaks the assistant's response using **pyttsx3**  
+**Interactive UI** – Includes a simple, responsive **frontend with animations**  
+**Start/Stop Listening** – Control assistant via UI buttons  
 
 ---
 
-## 🚀 Tech Stack  
+## Tech Stack  
 
 | Technology  | Purpose |
 |-------------|---------|
@@ -32,10 +32,10 @@ Watch the AI Voice Assistant in action! Click below to see the demo:
 
 ---
 
-### 📸 UI Preview  
+### UI Preview  
 ![Untitledvideo-MadewithClipchamp-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/baab315e-d0ef-41bf-aafc-04eb4e4263e8)
 
-### 📹 How It Works  
+### How It Works  
 1️⃣ Click **"Start Voice Command"**  
 2️⃣ Say **"Alexa"** and then give your command  
 3️⃣ The assistant **processes your request** and **speaks the response**  
@@ -43,7 +43,7 @@ Watch the AI Voice Assistant in action! Click below to see the demo:
 
 ---
 
-## 🛠️ Installation  
+## Installation  
 
 ### 1️⃣ Clone the Repository  
 ```bash
@@ -69,7 +69,7 @@ Your server will now run at http://127.0.0.1:8000/ 🎉
 ### 4️⃣ Open the Web Interface
 Once the server is running, open index.html in your browser.
 
-## 📂 Project Structure  
+## Project Structure  
 
 ```csharp
 ai-voice-assistant/
